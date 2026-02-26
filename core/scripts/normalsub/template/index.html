@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
+
 <head>
     <meta charset="UTF-8">
     <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
@@ -7,7 +8,9 @@
     <title>{{ username }}</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <script src="./script.js" defer></script>
 </head>
+
 <body>
     <div class="background-animation"></div>
     <div id="loading-indicator" class="loading-indicator">
@@ -16,7 +19,7 @@
 
     <div class="container">
         <header class="header">
-            <h1 class="header-title">Welcome, <strong>{{ username }}</strong></h1>
+            <h1 class="header-title">Привет, <strong>{{ username }}</strong></h1>
             <button id="dark-mode-toggle" class="theme-toggle" aria-label="Toggle theme">
                 <i id="theme-icon" class="fas fa-sun"></i>
             </button>
@@ -27,7 +30,7 @@
                 <div class="card info-card">
                     <div class="card-icon"><i class="fas fa-user"></i></div>
                     <div class="card-content">
-                        <h2 class="card-title">Username</h2>
+                        <h2 class="card-title">Пользователь:</h2>
                         <p class="card-value">{{ username }}</p>
                     </div>
                 </div>
@@ -35,7 +38,7 @@
                 <div class="card info-card">
                     <div class="card-icon"><i class="fas fa-chart-line"></i></div>
                     <div class="card-content" data-tooltip="{{ usage_raw }}">
-                        <h2 class="card-title">Data Usage</h2>
+                        <h2 class="card-title">Использование данных:</h2>
                         <p class="card-value">{{ usage }}</p>
                     </div>
                 </div>
@@ -43,62 +46,62 @@
                 <div class="card info-card">
                     <div class="card-icon"><i class="fas fa-calendar-check"></i></div>
                     <div class="card-content">
-                        <h2 class="card-title">Expires On</h2>
+                        <h2 class="card-title">Доступен до:</h2>
                         <p class="card-value">{{ expiration_date }}</p>
                     </div>
                 </div>
             </section>
-            
+
             <section class="card app-import-section {% if blocked %}blocked{% endif %}">
                 <div class="card-header">
                     <i class="fas fa-link"></i>
-                    <h2>Client Import</h2>
+                    <h2>Импорт</h2>
                 </div>
                 <div class="card-body">
                     {% if blocked %}
                     <div class="blocked-message">
                         <i class="fas fa-exclamation-triangle"></i>
-                        <h3>Account Suspended</h3>
-                        <p>Your subscription is currently disabled.</p>
+                        <h3>Действие учетной записи приостановлено</h3>
+                        <p>В данный момент ваша подписка отключена.</p>
                     </div>
                     {% else %}
                     <div class="app-tabs">
                         <div class="app-tabs-nav">
-                            <button class="app-tab-btn active" data-target="#tab-general">General</button>
-                            <button class="app-tab-btn" data-target="#tab-singbox">Sing-Box</button>
-                            <button class="app-tab-btn" data-target="#tab-hiddify">Hiddify</button>
-                            <button class="app-tab-btn" data-target="#tab-streisand">Streisand</button>
-                            <button class="app-tab-btn" data-target="#tab-nekobox">NekoBox</button>
+                            <button class="app-tab-btn active" data-target="#tab-pc">PC</button>
+                            <button class="app-tab-btn" data-target="#tab-android">Android</button>
+                            <button class="app-tab-btn" data-target="#tab-ios">iOS</button>
                         </div>
                         <div class="app-tabs-content">
-                            <div class="app-tab-pane active" id="tab-general">
+                            <div class="app-tab-pane active" id="tab-pc">
                                 <img src="{{ sublink_qrcode }}" alt="Universal Subscription QR Code" class="qrcode">
-                                <button class="btn btn-primary" onclick="copyToClipboard('{{ sub_link }}')">
-                                    <i class="fas fa-copy"></i> Copy Universal Link
+                                <button class="btn btn-primary" onclick="copyToClipboard('{{ sub_link }}#{{ username }}')">
+                                    <i class="fas fa-copy"></i> Скопировать подписку
                                 </button>
-                            </div>
-                            <div class="app-tab-pane" id="tab-singbox">
-                                <img src="{{ singbox_qrcode }}" alt="Sing-Box QR Code" class="qrcode">
-                                <a href="sing-box://import-remote-profile?url={{ sub_link_encoded }}" class="btn btn-secondary">
-                                    <i class="fas fa-arrow-right"></i> Add to Sing-Box
+                                <a class="btn btn-primary"
+                                    href="https://github.com/KaringX/karing/releases/download/v1.2.8.1103/karing_1.2.8.1103_windows_x64.exe"
+                                    target="_blank">
+                                    <i class="fas fa-download"></i> Скачать приложение для PC
                                 </a>
                             </div>
-                            <div class="app-tab-pane" id="tab-hiddify">
-                                <img src="{{ hiddify_qrcode }}" alt="Hiddify QR Code" class="qrcode">
-                                <a href="hiddify://import/{{ sub_link_encoded }}" class="btn btn-secondary">
-                                    <i class="fas fa-arrow-right"></i> Add to Hiddify
+                            <div class="app-tab-pane" id="tab-android">
+                                <img src="{{ sublink_qrcode }}" alt="Universal Subscription QR Code" class="qrcode">
+                                <button class="btn btn-primary" onclick="copyToClipboard('{{ sub_link }}#{{ username }}')">
+                                    <i class="fas fa-copy"></i> Скопировать подписку
+                                </button>
+                                <a class="btn btn-primary"
+                                    href="https://github.com/KaringX/karing/releases/download/v1.2.8.1103/karing_1.2.8.1103_android_arm64-v8a.apk"
+                                    target="_blank">
+                                    <i class="fas fa-download"></i> Скачать приложение для Android
                                 </a>
                             </div>
-                            <div class="app-tab-pane" id="tab-streisand">
-                                <img src="{{ streisand_qrcode }}" alt="Streisand QR Code" class="qrcode">
-                                <a href="streisand://import/sub?url={{ sub_link_encoded }}" class="btn btn-secondary">
-                                    <i class="fas fa-arrow-right"></i> Add to Streisand
-                                </a>
-                            </div>
-                            <div class="app-tab-pane" id="tab-nekobox">
-                                <img src="{{ nekobox_qrcode }}" alt="NekoBox QR Code" class="qrcode">
-                                <a href="nekobox://import?url={{ sub_link_encoded }}" class="btn btn-secondary">
-                                    <i class="fas fa-arrow-right"></i> Add to NekoBox
+                            <div class="app-tab-pane" id="tab-ios">
+                                <img src="{{ sublink_qrcode }}" alt="Universal Subscription QR Code" class="qrcode">
+                                <button class="btn btn-primary" onclick="copyToClipboard('{{ sub_link }}#{{ username }}')">
+                                    <i class="fas fa-copy"></i> Скопировать подписку
+                                </button>
+                                <a class="btn btn-primary" href="https://apps.apple.com/ca/app/karing/id6472431552"
+                                    target="_blank">
+                                    <i class="fas fa-download"></i> Скачать приложение для iOS
                                 </a>
                             </div>
                         </div>
@@ -107,51 +110,76 @@
                 </div>
             </section>
 
-            {% if local_uris and not blocked %}
-            <section class="card uri-section">
-                <div class="card-header">
-                    <i class="fas fa-server"></i>
-                    <h2>Manual Connection URIs</h2>
-                </div>
-                <div class="card-body">
-                    <div class="qr-grid">
-                    {% for item in local_uris %}
-                        <div class="qr-item">
-                            <h3 class="qr-title">{{ item.label }}</h3>
-                            {% if item.qrcode %}
-                                <img src="{{ item.qrcode }}" alt="{{ item.label }} QR Code" class="qrcode">
-                                <button class="btn btn-secondary" onclick="copyToClipboard('{{ item.uri }}')">
-                                    <i class="fas fa-copy"></i> Copy URI
-                                </button>
-                            {% else %}
-                                <p class="uri-unavailable">URI not available</p>
-                            {% endif %}
-                        </div>
-                    {% endfor %}
-                    </div>
-                </div>
-            </section>
-            {% endif %}
-
             {% if node_uris and not blocked %}
             <section class="card uri-section">
                 <div class="card-header">
                     <i class="fas fa-globe"></i>
-                    <h2>External Node URIs</h2>
+                    <h2>Инструкция</h2>
                 </div>
                 <div class="card-body">
-                    <div class="qr-grid">
+                    <div class="instruction-grid">
                         {% for item in node_uris %}
-                        <div class="qr-item">
-                            <h3 class="qr-title">{{ item.label }}</h3>
-                            {% if item.qrcode %}
-                                <img src="{{ item.qrcode }}" alt="{{ item.label }} QR Code" class="qrcode">
-                                <button class="btn btn-secondary" onclick="copyToClipboard('{{ item.uri }}')">
-                                    <i class="fas fa-copy"></i> Copy URI
-                                </button>
-                            {% else %}
-                                <p class="uri-unavailable">URI not available</p>
-                            {% endif %}
+                        <div class="instruction-item">
+                            <h3>Инструкция по установке:</h3>
+                            <br>
+                            <p>1. Запускаем <b style="color: red;">karling_***_windows_x64.exe</b> файл.</p>
+                            <br>
+                            <img src="./img/screenshot_1.png" alt="screenshot_1" class="image_1">
+                            <br><br>
+                            <img src="./img/screenshot_2.png" alt="screenshot_2" class="image_2">
+                            <br><br>
+                            <p>2. Следуем установке, соглашаемся со всем.</p>
+                            <br>
+                            <img src="./img/screenshot_3.png" alt="screenshot_3" class="image_3">
+                            <br><br>
+                            <p>3. После установки приложения нужно сделать автоматический запуск от имени администратора.</p>
+                            <br>
+                            <img src="./img/screenshot_12.png" alt="screenshot_12" class="image_12">
+                            <br><br>
+                            <img src="./img/screenshot_13.png" alt="screenshot_13" class="image_13">
+                            <br><br>
+                            <img src="./img/screenshot_14.png" alt="screenshot_14" class="image_14">
+                            <br><br>
+                            <img src="./img/screenshot_15.png" alt="screenshot_15" class="image_15">
+                            <br><br>
+                            <p>4. После этого запускаем приложение. Соглашаемся и нажимаем кнопку <b style="color: red;">Дальше</b> до самого конца. <div style="color: green;">(Рекомендуется выбрать Русский язык и отключить Режим новичка)</div></p>
+                            <br>
+                            <p>5. Следуем скриншотам ниже.</p>
+                            <br>
+                            <img src="./img/screenshot_16.png" alt="screenshot_16" class="image_16">
+                            <br><br>
+                            <img src="./img/screenshot_17.png" alt="screenshot_17" class="image_17">
+                            <br><br>
+                            <img src="./img/screenshot_18.png" alt="screenshot_18" class="image_18">
+                            <br><br>
+                            <img src="./img/screenshot_19.png" alt="screenshot_19" class="image_19">
+                            <br><br>
+                            <img src="./img/screenshot_20.png" alt="screenshot_20" class="image_20">
+                            <br><br>
+                            <img src="./img/screenshot_21.png" alt="screenshot_21" class="image_21">
+                            <br><br>
+                            <img src="./img/screenshot_22.png" alt="screenshot_22" class="image_22">
+                            <br><br>
+                            <img src="./img/screenshot_23.png" alt="screenshot_23" class="image_23">
+                            <br><br>
+                            <img src="./img/screenshot_24.png" alt="screenshot_24" class="image_24">
+                            <br><br>
+                            <img src="./img/screenshot_25.png" alt="screenshot_25" class="image_25">
+                            <br><br>
+                            <img src="./img/screenshot_26.png" alt="screenshot_26" class="image_26">
+                            <br><br>
+                            <img src="./img/screenshot_27.png" alt="screenshot_27" class="image_27">
+                            <br><br>
+                            <img src="./img/screenshot_28.png" alt="screenshot_28" class="image_28">
+                            <br><br>
+                            <img src="./img/screenshot_29.png" alt="screenshot_29" class="image_29">
+                            <br><br>
+                            <p>6. Добавление подписки. <p style="color: red;">(перед этим действием необхомо скопировать подписку).</p></p>
+                            <br>
+                            <img src="./img/screenshot_30.png" alt="screenshot_30" class="image_30">
+                            <br><br>
+                            <img src="./img/screenshot_31.png" alt="screenshot_31" class="image_31">
+                            <br><br>
                         </div>
                         {% endfor %}
                     </div>
@@ -160,6 +188,6 @@
             {% endif %}
         </main>
     </div>
-    <script src="script.js"></script>
 </body>
+
 </html>
